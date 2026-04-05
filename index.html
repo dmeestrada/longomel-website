@@ -850,11 +850,19 @@
       </div>
     </div>
 
-    <!-- ROSMANINHAL & ESCUSA -->
+    <!-- ROSMANINHAL -->
     <div class="place-card reveal">
       <div class="place-body" style="padding-top:1.8rem;">
-        <div class="place-name">Rosmaninhal & Escusa</div>
-        <p class="place-desc">Lugares do norte da freguesia, entre montados e campos abertos, com tradições rurais vivas e uma comunidade ligada à terra há gerações.</p>
+        <div class="place-name">Rosmaninhal</div>
+        <p class="place-desc">Lugar do norte da freguesia, entre montados e campos abertos, com tradições rurais vivas e uma comunidade ligada à terra há gerações. Festeja o 1 de Maio.</p>
+      </div>
+    </div>
+
+    <!-- ESCUSA E TOM -->
+    <div class="place-card reveal">
+      <div class="place-body" style="padding-top:1.8rem;">
+        <div class="place-name">Escusa e Tom</div>
+        <p class="place-desc">Dois lugares unidos pela paisagem alentejana e pelo espírito de comunidade, situados no coração da freguesia, entre sobreiros e campos de centeio.</p>
       </div>
     </div>
 
@@ -977,32 +985,34 @@
 
   <!-- FORM WRAP -->
   <div id="frm-wrap" class="reveal">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
-      <div>
-        <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">O teu nome *</label>
-        <input id="fi-name" type="text" maxlength="60" placeholder="Ex: Maria da Silva"
-          style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box;"/>
+    <form id="frm-form" action="https://formspree.io/f/xwvwaplg" method="POST" onsubmit="enviarMensagem(event)">
+      <input type="hidden" name="_subject" value="Longomel — Nova mensagem"/>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div>
+          <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">O teu nome *</label>
+          <input id="fi-name" name="nome" type="text" maxlength="60" placeholder="Ex: Maria da Silva"
+            style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box;"/>
+        </div>
+        <div>
+          <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">Localidade</label>
+          <input id="fi-local" name="localidade" type="text" maxlength="60" placeholder="Ex: Lisboa, Longomel…"
+            style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box;"/>
+        </div>
       </div>
-      <div>
-        <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">Localidade</label>
-        <input id="fi-local" type="text" maxlength="60" placeholder="Ex: Lisboa, Longomel…"
-          style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box;"/>
+      <div style="margin-bottom:0.4rem;">
+        <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">A tua mensagem *</label>
+        <textarea id="fi-msg" name="mensagem" maxlength="500" rows="5" placeholder="Escreve aqui a tua opinião, sugestão ou memória sobre Longomel…"
+          style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box; resize:vertical;"></textarea>
+        <div id="fi-count" style="text-align:right; font-size:0.7rem; color:rgba(242,232,213,0.3); margin-top:0.3rem;">0 / 500</div>
       </div>
-    </div>
-    <div style="margin-bottom:0.4rem;">
-      <label style="display:block; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#D4A853; margin-bottom:0.4rem;">A tua mensagem *</label>
-      <textarea id="fi-msg" maxlength="500" rows="5" placeholder="Escreve aqui a tua opinião, sugestão ou memória sobre Longomel…"
-        style="width:100%; padding:0.7rem 1rem; background:#2a2620; border:1px solid #5a5040; border-radius:5px; color:#f2e8d5; font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box; resize:vertical;"></textarea>
-      <div id="fi-count" style="text-align:right; font-size:0.7rem; color:rgba(242,232,213,0.3); margin-top:0.3rem;">0 / 500</div>
-    </div>
-    <div id="fi-err" style="display:none; color:#e07070; font-size:0.83rem; margin-bottom:0.6rem;"></div>
-    <button id="fi-btn"
-      style="background:transparent; border:1px solid #D4A853; color:#D4A853; font-family:inherit; font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.75rem 2.2rem; border-radius:4px; cursor:pointer; transition:background 0.25s, color 0.25s;"
-      onmouseover="this.style.background='#D4A853';this.style.color='#1C1A16';"
-      onmouseout="this.style.background='transparent';this.style.color='#D4A853';"
-      onclick="enviarMensagem()">
-      ✉ Enviar mensagem
-    </button>
+      <div id="fi-err" style="display:none; color:#e07070; font-size:0.83rem; margin-bottom:0.6rem;"></div>
+      <button id="fi-btn" type="submit"
+        style="background:transparent; border:1px solid #D4A853; color:#D4A853; font-family:inherit; font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.75rem 2.2rem; border-radius:4px; cursor:pointer; transition:background 0.25s, color 0.25s;"
+        onmouseover="this.style.background='#D4A853';this.style.color='#1C1A16';"
+        onmouseout="this.style.background='transparent';this.style.color='#D4A853';">
+        ✉ Enviar mensagem
+      </button>
+    </form>
   </div>
 
   <!-- AGRADECIMENTO -->
@@ -1051,11 +1061,14 @@
     });
   }
 
-  function enviarMensagem() {
+  function enviarMensagem(event) {
+    event.preventDefault();
+
     var name  = (document.getElementById('fi-name').value  || '').trim();
     var local = (document.getElementById('fi-local').value || '').trim();
     var msg   = (document.getElementById('fi-msg').value   || '').trim();
     var err   = document.getElementById('fi-err');
+    var btn   = document.getElementById('fi-btn');
 
     err.style.display = 'none';
     if (!name) {
@@ -1071,20 +1084,33 @@
       return;
     }
 
+    btn.textContent = 'A enviar…';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+
     var data = new Date().toLocaleDateString('pt-PT', {day:'2-digit', month:'long', year:'numeric'});
-    var assunto = 'Longomel — Mensagem de ' + name;
-    var corpo   = 'Nome: ' + name + '\n'
-                + (local ? 'Localidade: ' + local + '\n' : '')
-                + 'Data: ' + data + '\n\n'
-                + msg;
+    var form  = document.getElementById('frm-form');
+    var formData = new FormData(form);
+    formData.append('data', data);
+    formData.append('_subject', 'Longomel — Mensagem de ' + name);
 
-    var link = 'mailto:xamuxau@gmail.com?subject=' + encodeURIComponent(assunto) + '&body=' + encodeURIComponent(corpo);
-    window.open(link, '_blank');
-
-    setTimeout(function() {
-      document.getElementById('frm-wrap').style.display   = 'none';
-      document.getElementById('frm-thanks').style.display = 'block';
-    }, 600);
+    fetch('https://formspree.io/f/xwvwaplg', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    })
+    .then(function(r) {
+      if (r.ok) {
+        document.getElementById('frm-wrap').style.display   = 'none';
+        document.getElementById('frm-thanks').style.display = 'block';
+      } else {
+        return r.json().then(function(d) { throw new Error(d.error || 'Erro'); });
+      }
+    })
+    .catch(function() {
+      // Fallback: submit the form normally (works from any origin)
+      form.submit();
+    });
   }
 
   function voltarForm() {
