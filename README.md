@@ -1,2 +1,2 @@
 # longomel-website
-Longomel-village-website
+longomel-village-website
