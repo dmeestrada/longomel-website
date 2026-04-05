@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Longomel — Aldeia do Coração do Alentejo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --terra: #8B5E3C;
+      --argila: #C4936A;
+      --mel: #D4A853;
+      --palha: #F2E8D5;
+      --musgo: #4A5E3A;
+      --folha: #6B7F52;
+      --ribeira: #4A7C8C;
+      --agua: #A8C5CC;
+      --noite: #1C1A16;
+      --sombra: #2E2A22;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--noite);
+      color: var(--palha);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(13,26,16,0.72) 0%, rgba(28,43,26,0.68) 40%, rgba(26,24,16,0.78) 100%),
+        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&auto=format&fit=crop&q=80') center/cover no-repeat;
+    }
+
+    /* ── SIDE SCROLL ARROW ── */
+    .scroll-arrow {
+      position: absolute;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      animation: arrowFadeIn 3s ease forwards;
+      opacity: 0;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    @keyframes arrowFadeIn {
+      0% { opacity: 0; }
+      60% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .scroll-arrow-label {
+      writing-mode: vertical-rl;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(212,168,83,0.6);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      transition: color 0.3s;
+    }
+    .scroll-arrow:hover .scroll-arrow-label { color: var(--mel); }
+    .scroll-arrow-chevrons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .scroll-arrow-chevron {
+      width: 14px;
+      height: 8px;
+      border-right: 1.5px solid rgba(212,168,83,0.5);
+      border-bottom: 1.5px solid rgba(212,168,83,0.5);
+      transform: rotate(45deg);
+      animation: chevronPulse 1.8s ease-in-out infinite;
+    }
+    .scroll-arrow-chevron:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
+    .scroll-arrow-chevron:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
+    @keyframes chevronPulse {
+      0%, 100% { opacity: 0.3; transform: rotate(45deg) translateY(0); }
+      50% { opacity: 1; transform: rotate(45deg) translateY(3px); }
+    }
+    .scroll-arrow:hover .scroll-arrow-chevron { border-color: var(--mel); }
+
+    /* Animated landscape SVG */
+    .hero-landscape {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      height: 55%;
+      animation: landscapeFade 2.5s ease forwards;
+      opacity: 0;
+    }
+    @keyframes landscapeFade {
+      to { opacity: 1; }
+    }
+
+    /* Stars */
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,220,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 8%, rgba(255,255,220,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 20%, rgba(255,255,220,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 5%, rgba(255,255,220,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 12%, rgba(255,255,220,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 80% 25%, rgba(255,255,220,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 8%, rgba(255,255,220,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 30%, rgba(255,255,220,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 18%, rgba(255,255,220,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 35%, rgba(255,255,220,0.3) 0%, transparent 100%);
+    }
+
+    /* Moon glow */
+    .moon {
+      position: absolute;
+      top: 12%;
+      right: 18%;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #fff9e6, #f0d080);
+      box-shadow: 0 0 40px 20px rgba(212,168,83,0.25), 0 0 80px 40px rgba(212,168,83,0.1);
+      animation: moonrise 3s ease forwards;
+      opacity: 0;
+    }
+    @keyframes moonrise {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 1.5rem;
+      animation: heroIn 2s ease forwards;
+      opacity: 0;
+      margin-top: -8%;
+    }
+    @keyframes heroIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--mel);
+      margin-bottom: 1.2rem;
+      opacity: 0.85;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 14vw, 10rem);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--mel);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 300;
+      color: rgba(242,232,213,0.7);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+    }
+
+    /* hero-scroll removed — replaced by side arrow */
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(28,26,22,0.9), transparent);
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--mel);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(242,232,213,0.7);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--mel); }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--mel);
+      opacity: 0.8;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      color: #fff;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--argila);
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--mel);
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(242,232,213,0.75);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text p strong {
+      color: var(--mel);
+      font-weight: 500;
+    }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .stat-card {
+      border-left: 2px solid var(--mel);
+      padding-left: 1.5rem;
+      opacity: 0.85;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--mel);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(242,232,213,0.5);
+      margin-top: 0.3rem;
+    }
+
+    /* ── FULL WIDTH BAND ── */
+    .band {
+      width: 100%;
+      background: linear-gradient(135deg, #1a2a14 0%, #0d1a10 50%, #141a0d 100%);
+      border-top: 1px solid rgba(107,127,82,0.2);
+      border-bottom: 1px solid rgba(107,127,82,0.2);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 60px,
+        rgba(107,127,82,0.03) 60px,
+        rgba(107,127,82,0.03) 61px
+      );
+    }
+
+    .band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── HISTORY ── */
+    .history-timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .history-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--mel), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mel);
+      box-shadow: 0 0 10px rgba(212,168,83,0.5);
+    }
+
+    .timeline-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--mel);
+      margin-bottom: 0.3rem;
+    }
+    .timeline-text {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(242,232,213,0.65);
+      font-weight: 300;
+    }
+
+    /* ── PLACES GRID ── */
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .place-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .place-card:hover {
+      border-color: rgba(212,168,83,0.4);
+      transform: translateY(-4px);
+    }
+
+    .place-icon {
+      width: 100%;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .place-icon svg {
+      height: 110px;
+      width: auto;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+      transition: transform 0.3s;
+    }
+    .place-card:hover .place-icon svg {
+      transform: translateY(-4px) scale(1.04);
+    }
+
+    .place-body {
+      padding: 1.2rem 1.4rem 1.5rem;
+    }
+    .place-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .place-desc {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: rgba(242,232,213,0.55);
+      font-weight: 300;
+    }
+
+    /* ── GASTRONOMY ── */
+    .gastro-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .gastro-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem;
+      border: 1px solid rgba(212,168,83,0.15);
+      border-radius: 3px;
+      transition: background 0.3s;
+    }
+    .gastro-item:hover { background: rgba(212,168,83,0.05); }
+
+    .gastro-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .gastro-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--palha);
+      line-height: 1.2;
+    }
+    .gastro-note {
+      font-size: 0.78rem;
+      color: rgba(242,232,213,0.45);
+      margin-top: 0.25rem;
+      font-weight: 300;
+    }
+
+    /* ── QUOTE ── */
+    .quote-section {
+      text-align: center;
+      padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem);
+      background: linear-gradient(to bottom, var(--noite), #0d1a10, var(--noite));
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '❧';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20rem;
+      color: rgba(107,127,82,0.04);
+      pointer-events: none;
+    }
+
+    blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.5;
+      color: rgba(242,232,213,0.85);
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    blockquote::before {
+      content: '"';
+      font-size: 6rem;
+      color: var(--mel);
+      opacity: 0.3;
+      line-height: 0;
+      vertical-align: -2.5rem;
+      margin-right: 0.2rem;
+    }
+
+    cite {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-style: normal;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mel);
+      opacity: 0.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── ACTIVITIES ── */
+    .activities-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .activity-group h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--argila);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .activity-group ul {
+      list-style: none;
+    }
+    .activity-group li {
+      font-size: 0.88rem;
+      color: rgba(242,232,213,0.65);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .activity-group li::before {
+      content: '—';
+      color: var(--mel);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      width: 100%;
+      background: #0d0c09;
+      border-top: 1px solid rgba(212,168,83,0.15);
+      padding: 3rem clamp(1.5rem, 6vw, 6rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--mel);
+    }
+    .footer-sub {
+      font-size: 0.75rem;
+      color: rgba(242,232,213,0.35);
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+    .footer-coords {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: rgba(242,232,213,0.3);
+      font-weight: 300;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .activities-wrap { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Longomel</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#historia">História</a></li>
+    <li><a href="#lugares">Lugares</a></li>
+    <li><a href="#gastronomia">Gastronomia</a></li>
+    <li><a href="#vida">Vida Local</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars"></div>
+  <div class="moon"></div>
+
+  <!-- SVG Landscape -->
+  <svg class="hero-landscape" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sky gradient -->
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0d2410" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#0d2410" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a4a5a"/>
+        <stop offset="100%" stop-color="#0d2830"/>
+      </linearGradient>
+      <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2d4a1a"/>
+        <stop offset="100%" stop-color="#1a2d0d"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Distant hills -->
+    <path d="M0,200 Q180,140 360,170 Q540,200 720,155 Q900,110 1080,145 Q1260,180 1440,160 L1440,320 L0,320 Z" fill="url(#hillGrad)" opacity="0.5"/>
+    <!-- Mid hills -->
+    <path d="M0,240 Q200,190 400,220 Q600,250 800,210 Q1000,170 1200,205 Q1350,230 1440,215 L1440,320 L0,320 Z" fill="#1f3a10" opacity="0.8"/>
+    <!-- Water / ribeira -->
+    <path d="M0,280 Q240,265 480,275 Q720,285 960,270 Q1200,255 1440,268 L1440,320 L0,320 Z" fill="url(#waterGrad)" opacity="0.9"/>
+    <!-- Foreground ground -->
+    <path d="M0,300 Q360,292 720,298 Q1080,304 1440,296 L1440,320 L0,320 Z" fill="#0d1a08"/>
+    <!-- Cork tree silhouettes -->
+    <!-- Tree 1 -->
+    <g transform="translate(120, 240)">
+      <rect x="-5" y="30" width="10" height="45" fill="#1a0d05" rx="2"/>
+      <ellipse cx="0" cy="20" rx="28" ry="38" fill="#1e3010"/>
+      <ellipse cx="-12" cy="10" rx="18" ry="25" fill="#253d12"/>
+    </g>
+    <!-- Tree 2 -->
+    <g transform="translate(280, 230)">
+      <rect x="-4" y="28" width="8" height="38" fill="#1a0d05" rx="2"/>
+      <ellipse cx="0" cy="16" rx="22" ry="32" fill="#1e3010"/>
+      <ellipse cx="10" cy="8" rx="16" ry="20" fill="#253d12"/>
+    </g>
+    <!-- Tree 3 (right side) -->
+    <g transform="translate(1200, 235)">
+      <rect x="-5" y="30" width="10" height="42" fill="#1a0d05" rx="2"/>
+      <ellipse cx="0" cy="18" rx="26" ry="35" fill="#1e3010"/>
+      <ellipse cx="-10" cy="8" rx="17" ry="22" fill="#253d12"/>
+    </g>
+    <!-- Tree 4 -->
+    <g transform="translate(1350, 225)">
+      <rect x="-4" y="25" width="8" height="35" fill="#1a0d05" rx="2"/>
+      <ellipse cx="0" cy="14" rx="20" ry="28" fill="#1e3010"/>
+      <ellipse cx="8" cy="6" rx="14" ry="18" fill="#253d12"/>
+    </g>
+    <!-- Small house silhouette -->
+    <g transform="translate(700, 248)">
+      <rect x="-20" y="10" width="40" height="28" fill="#0d1505"/>
+      <polygon points="-24,10 24,10 0,-12" fill="#0a1204"/>
+      <rect x="-4" y="22" width="8" height="16" fill="#0d1a28"/>
+    </g>
+    <!-- Water reflection shimmer -->
+    <line x1="200" y1="283" x2="350" y2="283" stroke="rgba(212,168,83,0.15)" stroke-width="1.5"/>
+    <line x1="600" y1="278" x2="720" y2="278" stroke="rgba(212,168,83,0.1)" stroke-width="1"/>
+    <line x1="900" y1="282" x2="1050" y2="282" stroke="rgba(212,168,83,0.12)" stroke-width="1.5"/>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Concelho de Ponte de Sor · Alto Alentejo</p>
+    <h1 class="hero-title">Longo<em>mel</em></h1>
+    <p class="hero-subtitle">Onde a ribeira encontra a memória</p>
+  </div>
+
+  <!-- Side scroll arrow -->
+  <a href="#sobre" class="scroll-arrow">
+    <span class="scroll-arrow-label">Descobrir</span>
+    <div class="scroll-arrow-chevrons">
+      <div class="scroll-arrow-chevron"></div>
+      <div class="scroll-arrow-chevron"></div>
+      <div class="scroll-arrow-chevron"></div>
+    </div>
+  </a>
+</div>
+
+<!-- ABOUT -->
+<section id="sobre">
+  <div class="about-wrap">
+    <div class="about-text reveal">
+      <span class="section-label">A Aldeia</span>
+      <h2 class="section-title">Uma <em>terra</em><br>com alma antiga</h2>
+      <div class="divider"></div>
+      <p>
+        Longomel é uma das mais singulares freguesias do concelho de Ponte de Sor,
+        situada no coração do Alto Alentejo. A aldeia estende-se pelas <strong>duas margens da Ribeira de Longomel</strong>,
+        cujas águas férteis moldaram séculos de vida rural e identidade.
+      </p>
+      <p>
+        Com uma área de <strong>46,19 km²</strong>, a freguesia é constituída pelos lugares de
+        Longomel (sede), Sete Sobreiras, Rosmaninhal, Escusa, Tom e Vale de Arco —
+        cada um com a sua história e o seu caráter.
+      </p>
+      <p>
+        A abundância de água e a fertilidade dos campos fizeram desta aldeia
+        <strong>um exemplar único</strong> no contexto do concelho: um lugar onde
+        a lezíria ribeirinha contrasta com os montados de sobro que cobrem as
+        encostas, criando uma paisagem de rara beleza alentejana.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-number">1.228</div>
+        <div class="stat-label">Habitantes (Censos 2011)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">46 km²</div>
+        <div class="stat-label">Área da Freguesia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1327</div>
+        <div class="stat-label">Primeira referência documental</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1984</div>
+        <div class="stat-label">Ano em que se tornou freguesia autónoma</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY BAND -->
+<div class="band" id="historia">
+  <div class="band-inner">
+    <span class="section-label reveal">Percurso no tempo</span>
+    <h2 class="section-title reveal">Uma <em>história</em><br>de séculos</h2>
+    <div class="divider reveal"></div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+      <div class="history-timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-year">Séc. XIV · 1327</div>
+          <p class="timeline-text">A aldeia de "Lagomel" é mencionada numa carta de D. Afonso IV, como pertencendo ao concelho de Abrantes e à Coroa portuguesa.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1359</div>
+          <p class="timeline-text">Instituição de um morgado na "quintã de Lagomel", com herdades, matas e terrenos agrícolas — sinal de uma localidade já estabelecida e próspera.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Séc. XVI · 1527</div>
+          <p class="timeline-text">O Numeramento de D. João III regista Longomel como um concelho com 23 vizinhos, sob a jurisdição do Duque de Bragança, ligado a Vila Viçosa.</p>
+        </div>
+      </div>
+
+      <div class="history-timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-year">Séc. XVIII · 1758</div>
+          <p class="timeline-text">As Memórias Paroquiais registam a separação do antigo julgado de Margem e Longomel, passando a aldeia a integrar o termo de Ponte de Sor.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1836</div>
+          <p class="timeline-text">O antigo concelho de Margem e Longomel é definitivamente extinto por decreto régio, integrando-se na administração de Ponte de Sor.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1984</div>
+          <p class="timeline-text">Pela Lei n.º 47/84, de 31 de dezembro, Longomel torna-se freguesia autónoma — reconhecimento oficial da identidade e vitalidade desta comunidade.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem; padding: 1.5rem; border: 1px solid rgba(212,168,83,0.2); border-radius: 4px; background: rgba(212,168,83,0.04);" class="reveal">
+      <p style="font-size:0.9rem; color:rgba(242,232,213,0.65); line-height:1.8; font-weight:300;">
+        <strong style="color:var(--mel);">O nome da aldeia</strong> — "Longomel" terá evoluído ao longo de séculos a partir de
+        <em>"Lagosmil"</em>, referindo-se aos muitos lagos e pântanos que outrora existiam ao longo da ribeira. O nome apareceu
+        escrito de inúmeras formas: <em>Lago-Mill, Lagomiel, Lagomil, Longonnell, Logomel, Lagomel, Longo-Mel</em> e finalmente Longomel.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- LUGARES -->
+<section id="lugares">
+  <span class="section-label reveal">Descobrir</span>
+  <h2 class="section-title reveal">Os <em>lugares</em><br>da freguesia</h2>
+  <div class="divider reveal"></div>
+  <p style="color:rgba(242,232,213,0.6); font-weight:300; font-size:0.95rem; max-width:580px;" class="reveal">
+    A freguesia de Longomel é um mosaico de pequenas aldeias e lugares, cada um com
+    a sua personalidade, espalhados pelas margens da ribeira.
+  </p>
+
+  <div class="places-grid">
+    <!-- LONGOMEL -->
+    <div class="place-card reveal">
+      <div class="place-icon" style="background: linear-gradient(135deg, #0d1e35, #1a3050);">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="shieldBlue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a4a80"/>
+              <stop offset="100%" stop-color="#0d2d55"/>
+            </linearGradient>
+          </defs>
+          <!-- Shield -->
+          <path d="M8,8 L92,8 L92,72 Q50,112 8,72 Z" fill="url(#shieldBlue)" stroke="#D4A853" stroke-width="3"/>
+          <!-- Wavy ribeira bands -->
+          <path d="M18,42 Q29,37 40,42 Q51,47 62,42 Q73,37 84,42" stroke="#A8D8EA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M18,52 Q29,47 40,52 Q51,57 62,52 Q73,47 84,52" stroke="#A8D8EA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M18,62 Q29,57 40,62 Q51,67 62,62 Q73,57 84,62" stroke="#A8D8EA" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <!-- Golden wheat sheaf -->
+          <line x1="50" y1="34" x2="50" y2="18" stroke="#D4A853" stroke-width="1.5"/>
+          <line x1="44" y1="34" x2="44" y2="22" stroke="#D4A853" stroke-width="1.5"/>
+          <line x1="56" y1="34" x2="56" y2="22" stroke="#D4A853" stroke-width="1.5"/>
+          <ellipse cx="50" cy="15" rx="3" ry="5" fill="#D4A853"/>
+          <ellipse cx="44" cy="19" rx="2.5" ry="4" fill="#D4A853"/>
+          <ellipse cx="56" cy="19" rx="2.5" ry="4" fill="#D4A853"/>
+          <path d="M43,34 Q50,31 57,34" stroke="#D4A853" stroke-width="2" fill="none"/>
+          <!-- Label -->
+          <text x="50" y="106" text-anchor="middle" font-family="serif" font-size="7" fill="#D4A853" letter-spacing="1">LONGOMEL</text>
+        </svg>
+      </div>
+      <div class="place-body">
+        <div class="place-name">Longomel</div>
+        <p class="place-desc">Sede da freguesia, junto à ribeira. Centro da vida comunitária com a Junta de Freguesia e os festejos anuais de verão no primeiro fim-de-semana de agosto.</p>
+      </div>
+    </div>
+
+    <!-- SETE SOBREIRAS -->
+    <div class="place-card reveal">
+      <div class="place-icon" style="background: linear-gradient(135deg, #1a2d0d, #253d10);">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="shieldGreen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2d5a14"/>
+              <stop offset="100%" stop-color="#1a3a08"/>
+            </linearGradient>
+          </defs>
+          <!-- Shield -->
+          <path d="M8,8 L92,8 L92,72 Q50,112 8,72 Z" fill="url(#shieldGreen)" stroke="#D4A853" stroke-width="3"/>
+          <!-- 7 sobreiro roundels in formation (3+3+1) -->
+          <!-- Row 1 (3 trees) -->
+          <g transform="translate(24,28)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#5a8c30"/><rect x="-2" y="1" width="4" height="10" fill="#6b4c1a" rx="1"/></g>
+          <g transform="translate(50,25)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#4a7a20"/><rect x="-2" y="1" width="4" height="10" fill="#6b4c1a" rx="1"/></g>
+          <g transform="translate(76,28)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#5a8c30"/><rect x="-2" y="1" width="4" height="10" fill="#6b4c1a" rx="1"/></g>
+          <!-- Row 2 (3 trees) -->
+          <g transform="translate(32,50)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#4a7a20"/><rect x="-2" y="1" width="4" height="10" fill="#6b4c1a" rx="1"/></g>
+          <g transform="translate(68,50)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#5a8c30"/><rect x="-2" y="1" width="4" height="10" fill="#6b4c1a" rx="1"/></g>
+          <!-- Row 3 (1 tree, center) -->
+          <g transform="translate(50,48)"><ellipse cx="0" cy="-8" rx="7" ry="9" fill="#D4A853"/><rect x="-2" y="1" width="4" height="10" fill="#8B5E3C" rx="1"/></g>
+          <!-- Ground line -->
+          <line x1="15" y1="65" x2="85" y2="65" stroke="#D4A853" stroke-width="1" opacity="0.4"/>
+          <!-- Label -->
+          <text x="50" y="106" text-anchor="middle" font-family="serif" font-size="5.5" fill="#D4A853" letter-spacing="0.5">SETE SOBREIRAS</text>
+        </svg>
+      </div>
+      <div class="place-body">
+        <div class="place-name">Sete Sobreiras</div>
+        <p class="place-desc">Lugar de montado e paisagem aberta, onde o sobreiro é rei e a paisagem alentejana se revela em todo o seu esplendor de silêncio e natureza.</p>
+      </div>
+    </div>
+
+    <!-- ROSMANINHAL & ESCUSA -->
+    <div class="place-card reveal">
+      <div class="place-icon" style="background: linear-gradient(135deg, #1e1228, #2d1a3d);">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="shieldPurple" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3d1a5a"/>
+              <stop offset="100%" stop-color="#280d3d"/>
+            </linearGradient>
+          </defs>
+          <!-- Shield -->
+          <path d="M8,8 L92,8 L92,72 Q50,112 8,72 Z" fill="url(#shieldPurple)" stroke="#D4A853" stroke-width="3"/>
+          <!-- Rosemary/Rosmaninhal plant -->
+          <!-- Main stem -->
+          <line x1="50" y1="68" x2="50" y2="20" stroke="#7abf50" stroke-width="2"/>
+          <!-- Branches left -->
+          <line x1="50" y1="60" x2="34" y2="50" stroke="#7abf50" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="30" y2="38" stroke="#7abf50" stroke-width="1.5"/>
+          <line x1="50" y1="40" x2="34" y2="28" stroke="#7abf50" stroke-width="1.5"/>
+          <!-- Branches right -->
+          <line x1="50" y1="60" x2="66" y2="50" stroke="#7abf50" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="70" y2="38" stroke="#7abf50" stroke-width="1.5"/>
+          <line x1="50" y1="40" x2="66" y2="28" stroke="#7abf50" stroke-width="1.5"/>
+          <!-- Flowers (rosemary blue) -->
+          <circle cx="34" cy="50" r="3.5" fill="#8ab4f8"/>
+          <circle cx="30" cy="38" r="3.5" fill="#7aa8f0"/>
+          <circle cx="34" cy="28" r="3.5" fill="#8ab4f8"/>
+          <circle cx="66" cy="50" r="3.5" fill="#7aa8f0"/>
+          <circle cx="70" cy="38" r="3.5" fill="#8ab4f8"/>
+          <circle cx="66" cy="28" r="3.5" fill="#7aa8f0"/>
+          <circle cx="50" cy="20" r="4" fill="#D4A853"/>
+          <!-- Flower centers -->
+          <circle cx="34" cy="50" r="1.2" fill="#fff" opacity="0.8"/>
+          <circle cx="30" cy="38" r="1.2" fill="#fff" opacity="0.8"/>
+          <circle cx="34" cy="28" r="1.2" fill="#fff" opacity="0.8"/>
+          <circle cx="66" cy="50" r="1.2" fill="#fff" opacity="0.8"/>
+          <circle cx="70" cy="38" r="1.2" fill="#fff" opacity="0.8"/>
+          <circle cx="66" cy="28" r="1.2" fill="#fff" opacity="0.8"/>
+          <!-- Label -->
+          <text x="50" y="104" text-anchor="middle" font-family="serif" font-size="5" fill="#D4A853" letter-spacing="0.3">ROSMANINHAL · ESCUSA</text>
+        </svg>
+      </div>
+      <div class="place-body">
+        <div class="place-name">Rosmaninhal & Escusa</div>
+        <p class="place-desc">Lugares do norte da freguesia, entre montados e campos abertos, com tradições rurais vivas e uma comunidade ligada à terra há gerações.</p>
+      </div>
+    </div>
+
+    <!-- VALE DO ARCO -->
+    <div class="place-card reveal">
+      <div class="place-icon" style="background: linear-gradient(135deg, #0d1e30, #142840);">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="shieldAzul" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0d3060"/>
+              <stop offset="100%" stop-color="#061d40"/>
+            </linearGradient>
+          </defs>
+          <!-- Shield -->
+          <path d="M8,8 L92,8 L92,72 Q50,112 8,72 Z" fill="url(#shieldAzul)" stroke="#D4A853" stroke-width="3"/>
+          <!-- Arch / Arco -->
+          <path d="M22,65 L22,38 Q22,15 50,15 Q78,15 78,38 L78,65" fill="none" stroke="#D4A853" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Inner arch detail -->
+          <path d="M30,65 L30,41 Q30,24 50,24 Q70,24 70,41 L70,65" fill="none" stroke="rgba(212,168,83,0.3)" stroke-width="1.5"/>
+          <!-- Water below arch -->
+          <path d="M14,65 Q22,61 30,65 Q38,69 46,65 Q54,61 62,65 Q70,69 78,65 Q86,61 90,64" stroke="#A8D8EA" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M14,70 Q22,66 30,70 Q38,74 46,70 Q54,66 62,70 Q70,74 78,70" stroke="#A8D8EA" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <!-- Star inside arch -->
+          <polygon points="50,28 52,34 58,34 53,38 55,44 50,40 45,44 47,38 42,34 48,34" fill="#D4A853" opacity="0.9"/>
+          <!-- Label -->
+          <text x="50" y="106" text-anchor="middle" font-family="serif" font-size="6" fill="#D4A853" letter-spacing="0.5">VALE DO ARCO</text>
+        </svg>
+      </div>
+      <div class="place-body">
+        <div class="place-name">Vale do Arco</div>
+        <p class="place-desc">Lugar ribeirinho de singular beleza, com a sua festa em junho. As lezírias férteis junto à água foram durante séculos a base da cultura do arroz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <blockquote class="reveal">
+    A abundância de água da rede hidrográfica da ribeira de Longomel e a fertilidade dos seus campos fizeram desta freguesia um exemplar único no contexto do concelho de Ponte de Sor.
+  </blockquote>
+  <cite class="reveal">Câmara Municipal de Ponte de Sor</cite>
+</div>
+
+<!-- GASTRONOMIA -->
+<div class="band" id="gastronomia">
+  <div class="band-inner">
+    <span class="section-label reveal">À mesa</span>
+    <h2 class="section-title reveal">Sabores de <em>Longomel</em></h2>
+    <div class="divider reveal"></div>
+    <p style="color:rgba(242,232,213,0.6); font-weight:300; font-size:0.95rem; max-width:580px; margin-bottom:1rem;" class="reveal">
+      A gastronomia desta terra reflete a sua ligação à terra, ao campo e ao rio —
+      receitas simples, honestas e cheias de sabor alentejano.
+    </p>
+
+    <div class="gastro-list">
+      <div class="gastro-item reveal">
+        <span class="gastro-emoji">🥣</span>
+        <div>
+          <div class="gastro-name">Sopa de Couve com Feijão e Petinga Frita</div>
+          <div class="gastro-note">Prato humilde e reconfortante, símbolo da cozinha rural desta região</div>
+        </div>
+      </div>
+      <div class="gastro-item reveal">
+        <span class="gastro-emoji">🍞</span>
+        <div>
+          <div class="gastro-name">Migas de Pão</div>
+          <div class="gastro-note">Com entrecosto frito — o alentejo em cada garfada</div>
+        </div>
+      </div>
+      <div class="gastro-item reveal">
+        <span class="gastro-emoji">🥬</span>
+        <div>
+          <div class="gastro-name">Migas de Cozinha</div>
+          <div class="gastro-note">Migas de couve com feijão acompanhadas de carne no alguidar</div>
+        </div>
+      </div>
+      <div class="gastro-item reveal">
+        <span class="gastro-emoji">🫒</span>
+        <div>
+          <div class="gastro-name">Azeite de Longomel</div>
+          <div class="gastro-note">Produção local de azeite, fruto dos olivais da região</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDA LOCAL -->
+<section id="vida">
+  <span class="section-label reveal">Quotidiano</span>
+  <h2 class="section-title reveal">Vida <em>local</em></h2>
+  <div class="divider reveal"></div>
+  <div class="activities-wrap">
+    <div class="activity-group reveal">
+      <h3>🌾 Atividades Económicas</h3>
+      <ul>
+        <li>Agricultura e cultura do arroz nas lezírias</li>
+        <li>Indústria de cerâmica local</li>
+        <li>Produção e transformação de carvão</li>
+        <li>Lagar de azeite</li>
+        <li>Turismo rural e natureza</li>
+        <li>Exploração do montado de sobro</li>
+      </ul>
+    </div>
+    <div class="activity-group reveal">
+      <h3>🎉 Festividades</h3>
+      <ul>
+        <li>Festejos de Verão — 1.º fim-de-semana de agosto (Longomel)</li>
+        <li style="opacity:0.45; text-decoration: line-through; text-decoration-color: rgba(212,168,83,0.4);">Festa da Escusa e do Tom <span style="font-size:0.75rem; color: #e07070; text-decoration:none; display:inline-block; margin-left:0.3rem;">⏸ Suspensa</span></li>
+        <li>Festa de Vale do Arco — junho</li>
+        <li>Festa do Rosmaninhal — 1 de Maio</li>
+      </ul>
+    </div>
+    <div class="activity-group reveal">
+      <h3>🧵 Artesanato</h3>
+      <ul>
+        <li>Trabalhos em cortiça</li>
+        <li>Flores secas tradicionais</li>
+        <li>Pinturas a óleo e em gesso</li>
+      </ul>
+    </div>
+    <div class="activity-group reveal">
+      <h3>🌳 Natureza</h3>
+      <ul>
+        <li>Ribeira de Longomel e afluentes</li>
+        <li>Lezírias e campos férteis</li>
+        <li>Montados de sobreiro</li>
+        <li>Via romana "Estrada dos Almocreves"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OPINIÕES & SUGESTÕES -->
+<div class="band" id="opiniao">
+  <div class="band-inner">
+    <span class="section-label reveal">A tua voz</span>
+    <h2 class="section-title reveal">Opiniões & <em>Sugestões</em></h2>
+    <div class="divider reveal"></div>
+    <p style="color:rgba(242,232,213,0.6); font-weight:300; font-size:0.95rem; max-width:580px; margin-bottom:2rem;" class="reveal">
+      Tens memórias de Longomel, sugestões para o site ou simplesmente queres deixar uma palavra?
+      A tua opinião é bem-vinda.
+    </p>
+
+    <!-- Formulário -->
+    <div class="comment-form reveal">
+      <div class="comment-form-row">
+        <div class="comment-field">
+          <label class="comment-label">O teu nome</label>
+          <input type="text" class="comment-input" id="c-name" placeholder="Ex: Maria da Silva" maxlength="60"/>
+        </div>
+        <div class="comment-field">
+          <label class="comment-label">Localidade (opcional)</label>
+          <input type="text" class="comment-input" id="c-local" placeholder="Ex: Lisboa, Longomel…" maxlength="60"/>
+        </div>
+      </div>
+      <div class="comment-field" style="margin-top:1rem;">
+        <label class="comment-label">A tua mensagem</label>
+        <textarea class="comment-input comment-textarea" id="c-msg" placeholder="Escreve aqui a tua opinião, sugestão ou memória sobre Longomel…" maxlength="500"></textarea>
+        <div class="comment-char" id="c-count">0 / 500</div>
+      </div>
+      <button class="comment-btn" onclick="submitComment()">Enviar mensagem</button>
+    </div>
+
+    <!-- Lista de comentários -->
+    <div class="comments-list reveal" id="comments-list"></div>
+  </div>
+</div>
+
+<style>
+  .comment-form {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(212,168,83,0.15);
+    border-radius: 8px;
+    padding: 1.8rem;
+    max-width: 700px;
+  }
+  .comment-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media(max-width:600px){ .comment-form-row { grid-template-columns: 1fr; } }
+  .comment-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .comment-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mel);
+    opacity: 0.8;
+  }
+  .comment-input {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 0.65rem 0.9rem;
+    color: var(--palha);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+  .comment-input:focus { border-color: rgba(212,168,83,0.5); }
+  .comment-input::placeholder { color: rgba(242,232,213,0.25); }
+  .comment-textarea { resize: vertical; min-height: 110px; }
+  .comment-char {
+    font-size: 0.7rem;
+    color: rgba(242,232,213,0.3);
+    text-align: right;
+    margin-top: 0.2rem;
+  }
+  .comment-btn {
+    margin-top: 1.2rem;
+    background: transparent;
+    border: 1px solid var(--mel);
+    color: var(--mel);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.7rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .comment-btn:hover { background: var(--mel); color: var(--noite); }
+
+  .comments-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; max-width: 700px; }
+  .comment-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 1.1rem 1.3rem;
+    animation: fadeSlideIn 0.5s ease forwards;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity:0; transform:translateY(12px); }
+    to { opacity:1; transform:none; }
+  }
+  .comment-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .comment-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--mel);
+  }
+  .comment-card-local {
+    font-size: 0.72rem;
+    color: rgba(242,232,213,0.35);
+    letter-spacing: 0.1em;
+  }
+  .comment-card-date {
+    font-size: 0.7rem;
+    color: rgba(242,232,213,0.25);
+    margin-left: auto;
+  }
+  .comment-card-text {
+    font-size: 0.88rem;
+    color: rgba(242,232,213,0.65);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .comment-empty {
+    font-size: 0.85rem;
+    color: rgba(242,232,213,0.25);
+    font-style: italic;
+    padding: 1rem 0;
+  }
+  .comment-toast {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 0.78rem;
+    color: var(--folha);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+</style>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Longomel</div>
+    <div class="footer-sub">Freguesia do Concelho de Ponte de Sor · Alto Alentejo · Portugal</div>
+    <div style="font-size:0.7rem; color:rgba(242,232,213,0.2); margin-top:0.5rem; letter-spacing:0.08em;">
+      Site criado por <span style="color:rgba(212,168,83,0.5);">Duarte Estrada</span>
+    </div>
+  </div>
+  <div class="footer-coords">39°17'N · 8°04'W</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Character counter
+  const msgEl = document.getElementById('c-msg');
+  const countEl = document.getElementById('c-count');
+  if (msgEl) {
+    msgEl.addEventListener('input', () => {
+      countEl.textContent = msgEl.value.length + ' / 500';
+    });
+  }
+
+  // Comments stored in sessionStorage (persist during visit)
+  let comments = JSON.parse(sessionStorage.getItem('longomel_comments') || '[]');
+  renderComments();
+
+  function submitComment() {
+    const name = document.getElementById('c-name').value.trim();
+    const local = document.getElementById('c-local').value.trim();
+    const msg = document.getElementById('c-msg').value.trim();
+
+    if (!name) { document.getElementById('c-name').focus(); return; }
+    if (!msg) { document.getElementById('c-msg').focus(); return; }
+
+    const now = new Date();
+    const date = now.toLocaleDateString('pt-PT', { day:'2-digit', month:'long', year:'numeric' });
+
+    comments.unshift({ name, local, msg, date });
+    sessionStorage.setItem('longomel_comments', JSON.stringify(comments));
+
+    document.getElementById('c-name').value = '';
+    document.getElementById('c-local').value = '';
+    document.getElementById('c-msg').value = '';
+    countEl.textContent = '0 / 500';
+
+    renderComments();
+  }
+
+  function renderComments() {
+    const list = document.getElementById('comments-list');
+    if (!list) return;
+    if (comments.length === 0) {
+      list.innerHTML = '<p class="comment-empty">Ainda não há comentários. Sê o primeiro a deixar a tua opinião!</p>';
+      return;
+    }
+    list.innerHTML = comments.map(c => `
+      <div class="comment-card">
+        <div class="comment-card-header">
+          <span class="comment-card-name">${escHtml(c.name)}</span>
+          ${c.local ? `<span class="comment-card-local">· ${escHtml(c.local)}</span>` : ''}
+          <span class="comment-card-date">${c.date}</span>
+        </div>
+        <p class="comment-card-text">${escHtml(c.msg)}</p>
+      </div>
+    `).join('');
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+
+
+
+</body>
+</html>
